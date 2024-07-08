@@ -30,7 +30,7 @@ public class CommunityPostListDto {
 //	private Integer travelPlanId;			//Foregin Key: travel_plan테이블의 travel_plan_id(pk) 컬럼을 참조.
 	
 	private String nickname;     // 작성자 닉네임 (JOIN 된 users 테이블의 필드)
-	
+	private String id;
 	//post타입을 dto타입으로(CommunityPostListDto)로 변환
 	public static CommunityPostListDto fromEntity(Post post) {
 		
@@ -44,6 +44,7 @@ public class CommunityPostListDto {
 				.modifiedTime(post.getModifiedTime())
 				.good(post.getGood())
 				.nickname(post.getNickname())
+				.id(post.getId())
 				.build();
 	}
 

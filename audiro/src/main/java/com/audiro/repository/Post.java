@@ -30,4 +30,5 @@ public class Post {
 	private Integer travelPlanId;			//Foregin Key: travel_plan테이블의 travel_plan_id(pk) 컬럼을 참조.
 	
 	private String nickname;     // 작성자 닉네임 (JOIN 된 users 테이블의 필드)
+	private String id;
 }

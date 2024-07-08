@@ -537,26 +537,57 @@
                                         <p>${p.content}</p>
                                     </div>
                                 </div>
-                                <div class="mt-2 mb-1">
-                                    <p class="me-4"
-                                        style="color: grey; font-size: 90%; text-align: right;">수정
-                                        시간 : ${p.createdTime}</p>
-                                </div>
                             </form>
+                            <div
+                                class="d-flex align-items-center justify-content-between mt-2 mb-1">
+                                <img class="image-hover ms-2"
+                                    alt="good1"
+                                    src="../images/good1.png"
+                                    style="width: 5%;">
+                                <p class="me-4 mb-0"
+                                    style="color: grey; font-size: 90%; text-align: right;">수정
+                                    시간 : ${p.createdTime}</p>
+                            </div>
+                            <div
+                                class="d-flex justify-content-between mt-3 me-3">
+                                <c:choose>
+                                     <c:when test="${p.postTypeId == 20}">
+                                <c:url var="mate" value="/community/matelist">
+                                     <c:param name="id" value="${signedInUser}"></c:param>
+                                </c:url>
+                                <a class="btn btn-outline-warning ms-2"
+                                    href="${mate}">최신 목록</a>
+                                    </c:when>
+                                    <c:when test="${p.postTypeId == 30}">
+                                <c:url var="free" value="/community/freelist">
+                                     <c:param name="id" value="${signedInUser}"></c:param>
+                                </c:url>
+                                <a class="btn btn-outline-warning ms-2"
+                                    href="${free}">최신 목록</a>                                    
+                                    </c:when>
+                                </c:choose>
+                                <div>
+                                    <c:url var="postModifyPage"
+                                        value="/post/modify">
+                                        <c:param name="id"
+                                            value="${p.postId}" />
+                                    </c:url>
+                                <!-- 로그인 사용자 아이디와 작성자 아이디가 같은 경우에만 수정하기 버튼을 보여줌 -->
+                                <c:if test="${signedInUser eq p.id}">
+                                    <a class="btn btn-outline-info me-2"
+                                        href="${postModifyPage}">수정</a>
+                                    <a class="btn btn-outline-danger"
+                                        id="deleteButton" href="#">삭제</a>
+                                </c:if>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="card-footer">
                             <div class="container">
-                                <img class="image-hover" alt="good1"
-                                    src="../images/good1.png"
-                                    style="width: 5%;">
+                                <a href="" class="btn btn-outline-success">댓글 등록</a>
                             </div>
-                            <c:url var="postModifyPage"
-                                value="/post/modify">
-                                <c:param name="id" value="${p.postId}" />
-                            </c:url>
-                            <a class="btn btn-outline-primary"
-                                href="${postModifyPage}">수정하기</a>
                         </div>
                     </div>
                 </main>
