@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<c:url var="css" value="/css/home.css" />
+<link href="${css}" rel="stylesheet">
+<style>
+    .navbar-nav {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+</head>
+<body>
+    <c:url var="home" value="/">
+        <c:param name="id" value="${signedInUser}"></c:param>
+    </c:url>
+    <c:url var="community" value="/community/main">
+        <c:param name="id" value="${signedInUser}"></c:param>
+    </c:url>
+    <nav class="navbar navbar-expand" style="background-color: #FFF7A3;">
+        <div class="container">
+            <a class="ms-2 navbar-brand" href="${home}">audiro</a>
+            <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link"
+                        href="#">여행지 찾기</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                        href="#">여행 코스</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                        href="#">여행 후기</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                        href="${community}">커뮤니티</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
