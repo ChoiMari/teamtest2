@@ -17,10 +17,9 @@
 </head>
 <body>
     <c:url var="home" value="/">
-        <c:param name="id" value="${signedInUser}"></c:param>
     </c:url>
     <c:url var="community" value="/community/main">
-        <c:param name="id" value="${signedInUser}"></c:param>
+        <c:param name="userid" value="${signedInUser}"></c:param>
     </c:url>
     <nav class="navbar navbar-expand" style="background-color: #FFF7A3;">
         <div class="container">

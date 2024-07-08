@@ -155,4 +155,103 @@ public class CommunityRestController {
     }
     
   //---------------페이징 처리 끝 ------------------------------
+    
+    
+    
+   // 여행메이트 게시판 리스트
+    //여행메이트 게시판 최신순 정렬
+    @GetMapping("/community/mateNewList")//->비동기. 에이작스.뷰와 연결된 자바스트립트에서 axios.해서 이 url에 매핑시킨 곳으로 데이터가 전달되어 사용된다. 
+    public Map<String, Object> getMateNew(@RequestParam(defaultValue = "1") int page) { //defaultValue = "1"이걸 꼭 설정 해주어야함. 비동기라 url이 바뀌지 않기 때문에. 설정해 두지 않으면 여기에 값을 넣어 호출 없다. 처음 초기값 1. 즉 현재 페이지가 1페이지임.
+        log.debug("getMateNew()");
+        log.debug("page:{}",page);
+    	//pageSize : 한 페이지당 가져올 게시물 수(10개로 설정해둠)
+    	int pageSize = 40;
+    	//페이징 처리해서 여행메이트 게시판 글 최신순으로 정렬해서 select하는 서비스 호출해서 list에 저장
+        List<Post> posts2 = communityService.getSelectPagingMateOrderByIdDesc(page, pageSize);
+        log.debug(posts2.toString());
+        //전체 페이지 수
+        int totalPages2 = communityService.getMatePages(pageSize);
+        log.debug("totalPages2: {}",totalPages2);
+        
+        Map<String, Object> response2 = new HashMap<>();
+        //response객체에 저장함
+        response2.put("posts2", posts2);
+        response2.put("totalPages2", totalPages2);
+        //같은 url에 매핑된 자바스크립 코드에서 이 데이터를 받아서 이걸로 원하는 조작을 할 것.
+        log.debug("response2 : {}", response2);
+        return response2;
+    }
+    
+    // 여행메이트 게시판 리스트
+    //여행메이트 게시판 인기순 정렬
+    @GetMapping("/community/matePopularityList")//->비동기. 에이작스.뷰와 연결된 자바스트립트에서 axios.해서 이 url에 매핑시킨 곳으로 데이터가 전달되어 사용된다. 
+    public Map<String, Object> getMateGood(@RequestParam(defaultValue = "1") int page) { //defaultValue = "1"이걸 꼭 설정 해주어야함. 비동기라 url이 바뀌지 않기 때문에. 설정해 두지 않으면 여기에 값을 넣어 호출 없다. 처음 초기값 1. 즉 현재 페이지가 1페이지임.
+        log.debug("getMateGood()");
+        log.debug("page:{}",page);
+    	//pageSize : 한 페이지당 가져올 게시물 수(10개로 설정해둠)
+    	int pageSize = 40;
+    	//페이징 처리해서 여행메이트 게시판 글 최신순으로 정렬해서 select하는 서비스 호출해서 list에 저장
+        List<Post> posts5 = communityService.getSelectPagingMateOrderByGoodDesc(page, pageSize);
+        log.debug(posts5.toString());
+        //전체 페이지 수
+        int totalPages5 = communityService.getMatePages(pageSize);
+        log.debug("totalPages2: {}",totalPages5);
+        
+        Map<String, Object> response5 = new HashMap<>();
+        //response객체에 저장함
+        response5.put("posts5", posts5);
+        response5.put("totalPages5", totalPages5);
+        //같은 url에 매핑된 자바스크립 코드에서 이 데이터를 받아서 이걸로 원하는 조작을 할 것.
+        log.debug("response5 : {}", response5);
+        return response5;
+    }
+    
+    // 자유 게시판 리스트
+    //자유 게시판 최신순 정렬
+    @GetMapping("/community/freeNewList")//->비동기. 에이작스.뷰와 연결된 자바스트립트에서 axios.해서 이 url에 매핑시킨 곳으로 데이터가 전달되어 사용된다. 
+    public Map<String, Object> getFreeNew(@RequestParam(defaultValue = "1") int page) { //defaultValue = "1"이걸 꼭 설정 해주어야함. 비동기라 url이 바뀌지 않기 때문에. 설정해 두지 않으면 여기에 값을 넣어 호출 없다. 처음 초기값 1. 즉 현재 페이지가 1페이지임.
+        log.debug("getFreeNew()");
+        log.debug("page:{}",page);
+    	//pageSize : 한 페이지당 가져올 게시물 수(10개로 설정해둠)
+    	int pageSize = 40;
+    	//페이징 처리해서 여행메이트 게시판 글 최신순으로 정렬해서 select하는 서비스 호출해서 list에 저장
+        List<Post> posts2 = communityService.getSelectPagingFreeOrderByIdDesc(page, pageSize);
+        log.debug(posts2.toString());
+        //전체 페이지 수
+        int totalPages2 = communityService.getMatePages(pageSize);
+        log.debug("totalPages2: {}",totalPages2);
+        
+        Map<String, Object> response2 = new HashMap<>();
+        //response객체에 저장함
+        response2.put("posts2", posts2);
+        response2.put("totalPages2", totalPages2);
+        //같은 url에 매핑된 자바스크립 코드에서 이 데이터를 받아서 이걸로 원하는 조작을 할 것.
+        log.debug("response2 : {}", response2);
+        return response2;
+    }
+    
+    // 자유 게시판 리스트
+    // 자유 게시판 인기순 정렬
+    @GetMapping("/community/freePopularityList")//->비동기. 에이작스.뷰와 연결된 자바스트립트에서 axios.해서 이 url에 매핑시킨 곳으로 데이터가 전달되어 사용된다. 
+    public Map<String, Object> getFreeGood(@RequestParam(defaultValue = "1") int page) { //defaultValue = "1"이걸 꼭 설정 해주어야함. 비동기라 url이 바뀌지 않기 때문에. 설정해 두지 않으면 여기에 값을 넣어 호출 없다. 처음 초기값 1. 즉 현재 페이지가 1페이지임.
+        log.debug("getFreeGood()");
+        log.debug("page:{}",page);
+    	//pageSize : 한 페이지당 가져올 게시물 수(10개로 설정해둠)
+    	int pageSize = 40;
+    	//페이징 처리해서 여행메이트 게시판 글 최신순으로 정렬해서 select하는 서비스 호출해서 list에 저장
+        List<Post> posts5 = communityService.getSelectPagingFreeOrderByGoodDesc(page, pageSize);
+        log.debug(posts5.toString());
+        //전체 페이지 수
+        int totalPages5 = communityService.getMatePages(pageSize);
+        log.debug("totalPages2: {}",totalPages5);
+        
+        Map<String, Object> response5 = new HashMap<>();
+        //response객체에 저장함
+        response5.put("posts5", posts5);
+        response5.put("totalPages5", totalPages5);
+        //같은 url에 매핑된 자바스크립 코드에서 이 데이터를 받아서 이걸로 원하는 조작을 할 것.
+        log.debug("response5 : {}", response5);
+        return response5;
+    }
+    
 }

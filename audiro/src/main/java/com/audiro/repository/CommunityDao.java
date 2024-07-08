@@ -63,6 +63,9 @@ public interface CommunityDao {
     //글 상세보기 페이지
     Post selectDetailsFreeAndMate(int postId);
     
+	//글쓰기 (자유+여행메이트 글쓰면) post테이블에 insert하는 문장
+	public int insertFreeAndMate(Post post);
+    
 //	//인기(찜 많은 순위로) 여행후기 10개 가져옴. postId랑 찜개수 2개 select
 //	//여기서 뽑은 post_id로 title은 따로 뽑아가져오기. 근데 해당 포스트 삭제되었을경우 해당게시물삭제로 화면 보이게 예외처리하기
 //	public List<CommunityPopularReviewDto> selectReviewPopular10();

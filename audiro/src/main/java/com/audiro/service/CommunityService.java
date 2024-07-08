@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.audiro.dto.CommunityPostCreateDto;
 import com.audiro.dto.CommunityPostListDto;
 import com.audiro.dto.CommunityPostSearchDto;
 import com.audiro.dto.CommunityRankingDto;
@@ -156,7 +157,14 @@ public class CommunityService {
 		return CommunityPostListDto.fromEntity(post);
 	}
 	
-	
+	//글쓰기 DB에 insert
+	public int CommunityInsertCreateWriting(CommunityPostCreateDto dto) {
+		log.debug("CommunityWriting({})", dto);
+		int result = communityDao.insertFreeAndMate(dto.toEntity());
+		log.debug("insert 결과 = {}", result);
+		
+		return result;		
+	}
 	
 	
 	

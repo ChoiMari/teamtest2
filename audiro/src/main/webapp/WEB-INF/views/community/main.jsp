@@ -6,43 +6,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>어디로</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>어디로</title>
 <c:url var="css" value="/css/community.css" />
 <link href="${css}" rel="stylesheet">
-    <link href="${css}" rel="stylesheet" />
-    <!-- CSS 스타일 추가 마크태그에 쓰려고 했으나 그냥 빼버림-->
-    <style>
-        .highlight {
-            background-color: #F6E3FF;
-        }
-    </style>
+<link href="${css}" rel="stylesheet" />
+<!-- CSS 스타일 추가 마크태그에 쓰려고 했으나 그냥 빼버림-->
+<style>
+.highlight {
+    background-color: #F6E3FF;
+}
+
+.btn-group .btn {
+    padding: 0.20rem 0.45rem;
+    font-size: 0.8rem;
+}
+
+.radio-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+</style>
 </head>
 <body>
     <div class="container">
-    <nav class="navbar navbar-expand-lg bg-danger mt-5" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">audiro🤍 community</a>
+     <!-- 맨 위에 뜨는거 -->
+         <%-- 세션에 로그인 정보가 없는 경우 --%>
+    <c:if test="${empty signedInUser}">
+        <ul class="nav justify-content-end">
+            <c:url var="signUp" value="/user/signup"></c:url>
+            <li class="nav-item"><a class="nav-link"
+                href="${signUp}">회원가입</a></li>
+            <c:url var="signIn" value="/user/signin"></c:url>
+            <li class="nav-item"><a class="nav-link"
+                href="${signIn}">🤍 로그인</a></li>
+        </ul>
+    </c:if>
+    <%-- 로그인 정보가 세션에 저장된 경우 --%>
+    <c:if test="${not empty signedInUser}">
+        <ul class="nav justify-content-end">
+            <c:url var="mypage" value="/mypage">
+                <c:param name="userid" value="${signedInUser}"></c:param>
+            </c:url>
+            <li class="nav-item"><a class="nav-link"
+                href="${mypage}">내 정보</a></li>
+            <li class="nav-item"><c:url var="signOutPage"
+                    value="/user/signout" /> <a class="nav-link"
+                href="${signOutPage}"><span>${signedInUser}💜</span> 로그아웃</a>
+            </li>                
+        </ul>
+    </c:if>
+     <!-- 맨 위에 뜨는 nav끝 -->
+    <nav class="navbar navbar-expand-lg bg-danger mt-3" data-bs-theme="dark">
+  <div class="container">
+      <c:url var="home" value="/"></c:url>
+    <a class="navbar-brand ms-2" href="${home}">audiro🤍 community</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#">main
+          <a class="nav-link active" href="${home}">메인
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">plan</a>
+          <a class="nav-link" href="#">여행지 찾기</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">
-            review</a>
+            여행 코스</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">mypage</a>
+          <a class="nav-link" href="#">
+            여행 후기</a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" href="#">찜목록</a>
         </li>
       </ul>
     </div>
@@ -250,7 +293,7 @@
       <!-- 전체 탭 내용 시작 -->
         <div class="tab-pane fade show active" id="all" role="tabpanel">
             <!-- 라디오 버튼 시작 -->
-            <div class="mt-2">
+            <div class="mt-1">
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="btnradio1" id="btnradio1_1" autocomplete="off" checked>
                     <label class="btn btn-outline-dark" for="btnradio1_1">최신순</label>
@@ -260,7 +303,7 @@
             </div>
             <!-- 라디오 버튼 끝 -->
                     <!-- 전체 글 목록 테이블 시작 -->
-                    <table class="table table-hover mt-2">
+                    <table class="table table-hover mt-1">
                         <thead class="table-dark">
                             <tr>
                                 <th class="text-center">#</th>

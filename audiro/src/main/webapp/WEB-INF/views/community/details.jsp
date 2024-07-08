@@ -26,6 +26,33 @@
 </head>
 <body>
     <div class="container">
+         <!-- 맨 위에 뜨는거 -->
+         <%-- 세션에 로그인 정보가 없는 경우 --%>
+    <c:if test="${empty signedInUser}">
+        <ul class="nav justify-content-end">
+            <c:url var="signUp" value="/user/signup"></c:url>
+            <li class="nav-item"><a class="nav-link"
+                href="${signUp}">회원가입</a></li>
+            <c:url var="signIn" value="/user/signin"></c:url>
+            <li class="nav-item"><a class="nav-link"
+                href="${signIn}">🤍 로그인</a></li>
+        </ul>
+    </c:if>
+    <%-- 로그인 정보가 세션에 저장된 경우 --%>
+    <c:if test="${not empty signedInUser}">
+        <ul class="nav justify-content-end">
+            <c:url var="mypage" value="/mypage">
+                <c:param name="userid" value="${signedInUser}"></c:param>
+            </c:url>
+            <li class="nav-item"><a class="nav-link"
+                href="${mypage}">내 정보</a></li>
+            <li class="nav-item"><c:url var="signOutPage"
+                    value="/user/signout" /> <a class="nav-link"
+                href="${signOutPage}"><span>${signedInUser}💜</span> 로그아웃</a>
+            </li>                
+        </ul>
+    </c:if>
+     <!-- 맨 위에 뜨는 nav끝 -->
         <!-- **** row 클래스를 사용하여 두 섹션을 가로로 배치합니다. **** -->
         <div class="row">
             <!-- 사이드 메뉴 -->
@@ -76,11 +103,17 @@
                             </div>
                         </c:otherwise>
                     </c:choose>
-
+                    
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">커뮤니티 메인</li>
-                        <li class="list-group-item">여행 메이트</li>
-                        <li class="list-group-item">자유 게시판</li>
+                        <c:url var="matelist" value="/community/matelist"></c:url>
+                        <li class="list-group-item">
+                            <a href="${matelist}">여행 메이트</a>
+                        </li>
+                        <c:url var="freelist" value="/community/freelist"></c:url>
+                        <li class="list-group-item">
+                            <a href="${freelist}">자유게시판</a>     
+                        </li>
                         <li class="list-group-item">글쓰기</li>
                     </ul>
                     <div class="card-body">

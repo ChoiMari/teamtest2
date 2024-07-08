@@ -1,6 +1,8 @@
 package com.audiro.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.audiro.dto.CommunityPostCreateDto;
 import com.audiro.dto.CommunityPostListDto;
 import com.audiro.dto.CommunityPostSearchDto;
 import com.audiro.dto.CommunityRankingDto;
-
+import com.audiro.repository.Post;
 import com.audiro.service.CommunityService;
 
 
@@ -120,12 +123,22 @@ public class CommunityController {
 	}	
 	
 	@PostMapping("/test")
-	@ResponseBody //-> rest컨트롤러 리턴값은 뷰의 이름이 아니라 클라이언트로 직접 보내는 데이터(자바스트립트에서 받아서 사용)
-	public void test2(Model model) {
-		log.debug("create()");
+//	@ResponseBody //-> rest컨트롤러 리턴값은 뷰의 이름이 아니라 클라이언트로 직접 보내는 데이터(자바스트립트에서 받아서 사용)
+	public String test2(CommunityPostCreateDto dto) {
+		log.debug("POST: create(dto={})", dto);
 		//TODO : usersId/postTypeId/title/content 채워서 자바스크립트(에이작스)로 데이터 전달하기
 		
+		// 서비스 컴포넌트의 메서드를 호출해 데이터베이스에 새 글을 저장.
+		communityService.CommunityInsertCreateWriting(dto);
 		
+		return "redirect:/community/alllist"; // 포스트 목록 페이지로 리다이렉트
+		
+	
+	}
+	
+	@GetMapping("/matelist")
+	public void matelist(Model model) {
+		log.debug("matelist()");
 		//랭킹
 		//관심유저(찜많은) 순위 3명 select
 		List<CommunityRankingDto> userLikeTop3List = communityService.readRankingLikeUserTop3();
@@ -140,10 +153,34 @@ public class CommunityController {
 		//댓글 많이 단 user 순위 3(여행후기 제외) select
 		List<CommunityRankingDto> commentsUserTop3 = communityService.readRankingCommentsUserTop3();
 		log.debug("commentsUserTop3:{}",commentsUserTop3);
-		model.addAttribute("commentsUserTop3", commentsUserTop3);
+		model.addAttribute("commentsUserTop3", commentsUserTop3);		
 		
+	}	
 	
+	
+	@GetMapping("/freelist")
+	public void freelist(Model model) {
+		log.debug("matelist()");
+		//랭킹
+		//관심유저(찜많은) 순위 3명 select
+		List<CommunityRankingDto> userLikeTop3List = communityService.readRankingLikeUserTop3();
+		log.debug("userLikeTop3List:{}",userLikeTop3List);
+		model.addAttribute("userLikeTop3List", userLikeTop3List); //main.jsp로 보냄 ${}써서 사용가능
+		
+		//good많은 post 순위 3(여행후기 제외) select
+		List<CommunityRankingDto> postGoodTop3List = communityService.readRankingAllPostsGoodTop3();
+		log.debug("postGoodTop3List:{}", postGoodTop3List);
+		model.addAttribute("postGoodTop3List", postGoodTop3List);
+		
+		//댓글 많이 단 user 순위 3(여행후기 제외) select
+		List<CommunityRankingDto> commentsUserTop3 = communityService.readRankingCommentsUserTop3();
+		log.debug("commentsUserTop3:{}",commentsUserTop3);
+		model.addAttribute("commentsUserTop3", commentsUserTop3);		
+		
 	}
+	
+
+	
 	
 //	//TODO : main test ------------------------------------------------시작
 //	@GetMapping("/maintest")
