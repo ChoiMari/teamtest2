@@ -8,6 +8,7 @@ import com.audiro.dto.CommunityPostCreateDto;
 import com.audiro.dto.CommunityPostListDto;
 import com.audiro.dto.CommunityPostSearchDto;
 import com.audiro.dto.CommunityRankingDto;
+import com.audiro.dto.CommunityUpdateDto;
 import com.audiro.repository.CommunityDao;
 import com.audiro.repository.Post;
 import lombok.RequiredArgsConstructor;
@@ -165,6 +166,24 @@ public class CommunityService {
 		
 		return result;		
 	}
+	
+	//글 수정
+	public int communityUpdatePost(CommunityUpdateDto dto) {
+		log.debug("communityUpdatePost({})", dto);
+		int result = communityDao.updateFreeAndMate(dto.toEntity());
+		log.debug("update 결과 = {}", result);
+		
+		return result;		
+	}	
+	
+	//글삭제
+    public int delete(Integer postId) {
+        log.debug("delete(postId={})", postId);
+        
+        // 리포지토리 컴포넌트의 메서드를 호출해서 delete 쿼리를 실행.
+        int result = communityDao.deletePostById(postId);        
+        return result;
+    }
 	
 	//id로 users_id뽑아오기
 	public Integer selectUsersIdById(String id) {

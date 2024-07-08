@@ -13,6 +13,11 @@ public interface CommunityDao {
 	//id(회원가입)로 UsersId뽑아오기
 	Integer selectUsersIdById(String id);
 	
+	//수정하기
+	Integer updateFreeAndMate(Post post);
+	
+	//삭제하기
+	Integer deletePostById(Integer postId);
 	//-----------------페이징 처리해서 목록 가져오기 select 시작 ------------------------------
     // 페이징 처리를 위한 전체(여행메이트+자유게시판) 총 게시물 수를 가져오는 메서드
     int countAllPosts();

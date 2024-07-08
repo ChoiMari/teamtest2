@@ -568,16 +568,24 @@
                                 </c:choose>
                                 <div>
                                     <c:url var="postModifyPage"
-                                        value="/post/modify">
-                                        <c:param name="id"
+                                        value="/community/modify">
+                                        <c:param name="postId"
                                             value="${p.postId}" />
+                                        <c:param name="id"
+                                            value="${p.id}" />
                                     </c:url>
                                 <!-- 로그인 사용자 아이디와 작성자 아이디가 같은 경우에만 수정하기 버튼을 보여줌 -->
                                 <c:if test="${signedInUser eq p.id}">
                                     <a class="btn btn-outline-info me-2"
                                         href="${postModifyPage}">수정</a>
+                                        <c:url var="delete"
+                                        value="/community/delete">
+                                        <c:param name="postId"
+                                            value="${p.postId}"></c:param>
+                                    </c:url>
                                     <a class="btn btn-outline-danger"
-                                        id="deleteButton" href="#">삭제</a>
+                                        id="deleteButton" href="${delete}"
+                                        onclick="return confirmDeletion()">삭제</a>
                                 </c:if>
                                 </div>
                             </div>
@@ -619,6 +627,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-    
+<script>
+  function confirmDeletion() {
+    return confirm("정말 삭제하시겠습니까?");
+  }
+</script>    
 </body>
 </html>
