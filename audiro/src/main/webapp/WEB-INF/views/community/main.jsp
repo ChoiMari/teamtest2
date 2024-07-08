@@ -48,7 +48,7 @@
     <c:if test="${not empty signedInUser}">
         <ul class="nav justify-content-end">
             <c:url var="mypage" value="/mypage">
-                <c:param name="userid" value="${signedInUser}"></c:param>
+                <c:param name="id" value="${signedInUser}"></c:param>
             </c:url>
             <li class="nav-item"><a class="nav-link"
                 href="${mypage}">내 정보</a></li>
@@ -252,14 +252,11 @@
           </li>
           <li class="nav-item" role="presentation">
             <a class="nav-link disabled" href="#search" aria-selected="false" tabindex="-1" role="tab">검색 결과</a>
-          </li>       
-        <li class="nav-item dropdown me-5">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">글쓰기</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">여행메이트 구해요</a>
-            <a class="dropdown-item" href="#">자유 게시판</a>
-          </div>
-        </li>
+          </li>
+        <c:url var="writing" value="/community/create">
+            <c:param name="id" value="${signedInUser}"></c:param>
+        </c:url>
+        <a href="${writing}" class="btn btn-outline-danger ms-2 mb-1">글쓰기</a> 
         <!--검색옵션 시작-->      
         <div class="col-1 ms-5 me-2">
             <select class="form-control" name="category1">
@@ -401,12 +398,6 @@
                     <!-- 전체 글 목록 테이블 끝 -->
         </div>
         <!-- 자유 게시판 탭 내용 끝 -->
-        <div class="tab-pane fade" id="dropdown1">
-          <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
-        </div>
-        <div class="tab-pane fade" id="dropdown2">
-          <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
-        </div>
       </div>
       <!--탭콘텐츠끝-->
 </div>
@@ -420,5 +411,18 @@ integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIe
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <c:url var="communityJS" value="/js/community.js" />
 <script src="${communityJS}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 글쓰기 버튼 클릭 이벤트 리스너 추가
+    document.querySelector('.btn-outline-danger.ms-2.mb-1').addEventListener('click', function(event) {
+        // 사용자 ID가 없으면 경고 메시지를 표시하고 페이지 이동을 막습니다.
+        var id = "${signedInUser}";
+        if (!id) {
+            event.preventDefault(); // 링크 이동을 막습니다.
+            alert("로그인 하세요.");
+        }
+    });
+});
+</script>
 </body>
 </html>

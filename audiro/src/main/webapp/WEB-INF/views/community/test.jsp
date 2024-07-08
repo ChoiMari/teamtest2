@@ -90,7 +90,7 @@
     <c:if test="${not empty signedInUser}">
         <ul class="nav justify-content-end">
             <c:url var="mypage" value="/mypage">
-                <c:param name="userid" value="${signedInUser}"></c:param>
+                <c:param name="id" value="${signedInUser}"></c:param>
             </c:url>
             <li class="nav-item"><a class="nav-link"
                 href="${mypage}">내 정보</a></li>
@@ -291,18 +291,19 @@
                                             class="text-body-secondary"> 글 작성</span>
                                     </p>
                         </div>
-                        <div class="mt-2 ms-1" style="width: 20%;"> 
-                                <select class="form-select" id="typeId" style="float: left;">
+                     <c:url var="CreatePage" value="/community/test" />
+                        <form id="selectForm" method="post" action="${CreatePage}">
+                        <div class="flex-container mt-2 ms-1" style="width: 20%;"> 
+                                <select class="form-select" id="PostTypeId" name="PostTypeId" style="float: left;">
                                     <option value="" selected hidden>게시판 선택</option>
-                                    <option>여행메이트</option>
-                                    <option>자유게시판</option>
+                                    <option value="20">여행메이트</option>
+                                    <option value="30">자유게시판</option>
                             </select>
                         </div>
                         <!-- 글타입 콤보박스 끝 -->
-                            <c:url var="CreatePage" value="/community/test" />
-                            <form method="post" action="${CreatePage}">
+                                <input type="hidden" name="usersId" value="${usersId}" />
                                 <div class="mt-2 py-1" style="border-bottom: 1px solid grey;">
-                                    <input class="form-control form-control-lg" name="title" type="text" required autofocus style="font-size: 220%; text-align: center;" placeholder="제목을 입력하세요.">
+                                    <input class="form-control form-control-lg" name="title" type="text"  autofocus style="font-size: 220%; text-align: center;" placeholder="제목을 입력하세요.">
                                     <div class="flex-container">
                                         <div class="right-align me-2">
                                             <p class="m-2 p-2 mt-3 me-1"
@@ -314,7 +315,9 @@
                                 </div>
                                 <!-- 글 작성 content -->
                                 <div class="container mt-3">
-                                    <div class="editor-container" id="editor" name="content" required></div>
+                                    <div class="editor-container" id="editor"></div>
+                                    <!-- Quill 에디터 내용을 저장하기 위한 숨겨진 텍스트 영역 추가 -->
+                                    <textarea id="content" name="content" style="display:none;"></textarea>
                                 </div>
                                 <div class="mt-2 mb-1">
                                     <!-- 수정시간 수정버튼 누를때 넣기 <p class="me-4"
@@ -470,6 +473,44 @@ quill.on('text-change', function(delta, oldDelta, source) {
     console.log('Text change detected!');
     console.log(delta);
 });
+</script>
+<script>
+    // DOMContentLoaded 이벤트 리스너를 추가합니다. 이는 문서의 DOM 트리가 완전히 로드된 후 실행됩니다.
+    document.addEventListener('DOMContentLoaded', function() {
+        // 'selectForm'이라는 ID를 가진 폼 요소에 'submit' 이벤트 리스너를 추가합니다.
+        document.getElementById('selectForm').addEventListener('submit', function(event) {
+            // 'PostTypeId'라는 ID를 가진 선택 요소를 가져옵니다.
+            var select = document.getElementById('PostTypeId');
+            // 'title'이라는 이름을 가진 입력 요소를 가져옵니다.
+            var title = document.querySelector('input[name="title"]');
+            // Quill 에디터의 내용을 가져옵니다.
+            var content = document.querySelector('#editor .ql-editor').innerHTML;
+
+            // 선택된 값이 비어 있는 경우 (게시판 선택이 안 된 경우)
+            if (select.value === "") {
+                event.preventDefault(); // 폼 제출을 막습니다.
+                alert("게시판을 선택해 주세요."); // 사용자에게 경고 메시지를 표시합니다.
+                return false; // 추가적인 동작을 방지하기 위해 false를 반환합니다.
+            }
+
+            // 제목이 비어 있는 경우
+            if (title.value.trim() === "") {
+                event.preventDefault(); // 폼 제출을 막습니다.
+                alert("제목을 입력해 주세요."); // 사용자에게 경고 메시지를 표시합니다.
+                return false; // 추가적인 동작을 방지하기 위해 false를 반환합니다.
+            }
+
+            // 내용이 비어 있는 경우
+            if (content.trim() === "<p><br></p>") {
+                event.preventDefault(); // 폼 제출을 막습니다.
+                alert("내용을 입력해 주세요."); // 사용자에게 경고 메시지를 표시합니다.
+                return false; // 추가적인 동작을 방지하기 위해 false를 반환합니다.
+            }
+            
+            // 폼 제출 전 Quill 에디터의 내용을 숨겨진 텍스트 영역에 설정합니다.
+            document.getElementById('content').value = content;
+        });
+    });
 </script>
 </body>
 </html>

@@ -10,6 +10,8 @@ import com.audiro.dto.CommunityRankingDto;
 
 //community-mapper.xml에서 SQL을 실행하는 메서드 작성하기.
 public interface CommunityDao {
+	//id(회원가입)로 UsersId뽑아오기
+	Integer selectUsersIdById(String id);
 	
 	//-----------------페이징 처리해서 목록 가져오기 select 시작 ------------------------------
     // 페이징 처리를 위한 전체(여행메이트+자유게시판) 총 게시물 수를 가져오는 메서드
@@ -64,7 +66,7 @@ public interface CommunityDao {
     Post selectDetailsFreeAndMate(int postId);
     
 	//글쓰기 (자유+여행메이트 글쓰면) post테이블에 insert하는 문장
-	public int insertFreeAndMate(Post post);
+	int insertFreeAndMate(Post post);
     
 //	//인기(찜 많은 순위로) 여행후기 10개 가져옴. postId랑 찜개수 2개 select
 //	//여기서 뽑은 post_id로 title은 따로 뽑아가져오기. 근데 해당 포스트 삭제되었을경우 해당게시물삭제로 화면 보이게 예외처리하기

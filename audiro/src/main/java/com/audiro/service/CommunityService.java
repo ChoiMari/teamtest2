@@ -158,12 +158,18 @@ public class CommunityService {
 	}
 	
 	//글쓰기 DB에 insert
-	public int CommunityInsertCreateWriting(CommunityPostCreateDto dto) {
+	public int communityInsertCreateWriting(CommunityPostCreateDto dto) {
 		log.debug("CommunityWriting({})", dto);
 		int result = communityDao.insertFreeAndMate(dto.toEntity());
 		log.debug("insert 결과 = {}", result);
 		
 		return result;		
+	}
+	
+	//id로 users_id뽑아오기
+	public Integer selectUsersIdById(String id) {
+		Integer usersId = communityDao.selectUsersIdById(id);
+		return usersId;
 	}
 	
 	

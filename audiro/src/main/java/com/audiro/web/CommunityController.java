@@ -19,7 +19,7 @@ import com.audiro.dto.CommunityRankingDto;
 import com.audiro.repository.Post;
 import com.audiro.service.CommunityService;
 
-
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,9 +79,21 @@ public class CommunityController {
 	}
 	
 	
+	//글쓰기
 	@GetMapping("/create")
-	public void create(Model model) {
-		log.debug("create()");
+	public String test(Model model, @RequestParam(name = "id", required = false) String id
+			) { //HttpSession session
+		log.debug("create(id={})",id);
+
+        if (id == null || id.isEmpty()) {
+            log.error("ID가 제공되지 않았습니다.");
+            return "redirect:/user/signin"; // 또는 오류 페이지로 리다이렉트
+        }
+        
+		//id로 usersId뽑기
+	    Integer usersId = communityService.selectUsersIdById(id);
+	    log.debug("usersId={}",usersId);
+	    model.addAttribute("usersId", usersId);
 		
 		//랭킹
 		//관심유저(찜많은) 순위 3명 select
@@ -98,42 +110,20 @@ public class CommunityController {
 		List<CommunityRankingDto> commentsUserTop3 = communityService.readRankingCommentsUserTop3();
 		log.debug("commentsUserTop3:{}",commentsUserTop3);
 		model.addAttribute("commentsUserTop3", commentsUserTop3);
-	}
-	
-	
-	@GetMapping("/test")
-	public void test(Model model) {
-		log.debug("create()");
-		
-		//랭킹
-		//관심유저(찜많은) 순위 3명 select
-		List<CommunityRankingDto> userLikeTop3List = communityService.readRankingLikeUserTop3();
-		log.debug("userLikeTop3List:{}",userLikeTop3List);
-		model.addAttribute("userLikeTop3List", userLikeTop3List); //main.jsp로 보냄 ${}써서 사용가능
-		
-		//good많은 post 순위 3(여행후기 제외) select
-		List<CommunityRankingDto> postGoodTop3List = communityService.readRankingAllPostsGoodTop3();
-		log.debug("postGoodTop3List:{}", postGoodTop3List);
-		model.addAttribute("postGoodTop3List", postGoodTop3List);
-		
-		//댓글 많이 단 user 순위 3(여행후기 제외) select
-		List<CommunityRankingDto> commentsUserTop3 = communityService.readRankingCommentsUserTop3();
-		log.debug("commentsUserTop3:{}",commentsUserTop3);
-		model.addAttribute("commentsUserTop3", commentsUserTop3);
+		return "/community/create";
 	}	
 	
-	@PostMapping("/test")
+	@PostMapping("/create")
 //	@ResponseBody //-> rest컨트롤러 리턴값은 뷰의 이름이 아니라 클라이언트로 직접 보내는 데이터(자바스트립트에서 받아서 사용)
 	public String test2(CommunityPostCreateDto dto) {
 		log.debug("POST: create(dto={})", dto);
 		//TODO : usersId/postTypeId/title/content 채워서 자바스크립트(에이작스)로 데이터 전달하기
 		
 		// 서비스 컴포넌트의 메서드를 호출해 데이터베이스에 새 글을 저장.
-		communityService.CommunityInsertCreateWriting(dto);
+		communityService.communityInsertCreateWriting(dto);
 		
-		return "redirect:/community/alllist"; // 포스트 목록 페이지로 리다이렉트
+		return "redirect:/community/matelist"; // 포스트 목록 페이지로 리다이렉트
 		
-	
 	}
 	
 	@GetMapping("/matelist")

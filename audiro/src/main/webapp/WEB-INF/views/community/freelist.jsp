@@ -53,7 +53,7 @@
         <c:if test="${not empty signedInUser}">
             <ul class="nav justify-content-end">
                 <c:url var="mypage" value="/mypage">
-                    <c:param name="userid" value="${signedInUser}"></c:param>
+                    <c:param name="id" value="${signedInUser}"></c:param>
                 </c:url>
                 <li class="nav-item"><a class="nav-link"
                     href="${mypage}">내 정보</a></li>
@@ -88,15 +88,24 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">커뮤니티 메인</li>
-                        <c:url var="matelist" value="/community/matelist"></c:url>
+                        <c:url var="matelist" value="/community/matelist">
+                            <c:param name="id" value="${signedInUser}"></c:param>
+                        </c:url>
                         <li class="list-group-item">
                             <a href="${matelist}">여행 메이트</a>
                         </li>
-                        <c:url var="freelist" value="/community/freelist"></c:url>
+                        <c:url var="freelist" value="/community/freelist">
+                            <c:param name="id" value="${signedInUser}"></c:param>
+                        </c:url>
                         <li class="list-group-item">
                             <a href="${freelist}">자유게시판</a>     
                         </li>
-                        <li class="list-group-item">글쓰기</li>
+                        <c:url var="create" value="/community/create">
+                            <c:param name="id" value="${signedInUser}"></c:param>
+                        </c:url>                      
+                        <li class="list-group-item">
+                            <a id="create" href="${create}">글쓰기</a>     
+                        </li>
                     </ul>
                     <div class="card-body">
                         <a href="#" class="card-link p-2">#어디로 메인</a> <a
@@ -322,5 +331,20 @@
     <!-- 우리가 만드는 js파일 -->
     <c:url var="free" value="/js/community_free.js" />
     <script src="${free}"></script>
+    
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 글쓰기 버튼 클릭 이벤트 리스너 추가
+    document.querySelector('#create').addEventListener('click', function(event) {
+        // 사용자 ID가 없으면 경고 메시지를 표시하고 페이지 이동을 막습니다.
+        var id = "${signedInUser}";
+        if (!id) {
+            event.preventDefault(); // 링크 이동을 막습니다.
+            alert("로그인 하세요.");
+        }
+    });
+});
+</script>
+    
 </body>
 </html>
