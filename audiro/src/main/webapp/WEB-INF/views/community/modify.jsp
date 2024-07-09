@@ -108,19 +108,19 @@
             <div class="col-md-4 col-lg-3 mb-3">
                 <div class="card mb-3">
                     <h3 class="card-header"
-                        style="background-color: #3faf6c; text-align: center;">AUDIRO 🥦COMMUNITY</h3>
+                        style="background-color: #b8e1e1; text-align: center;">AUDIRO📄COMMUNITY</h3>
                     <div class="card-body">
                         <h4 class="card-title m-1"
-                            style="text-align: center;">writing</h4>
+                            style="text-align: center;">modify</h4>
                         <h6 class="card-subtitle text-muted p-2"
-                            style="text-align: center;">You guys write a lot.</h6>
+                            style="text-align: center;">Try your best to fix it.</h6>
                         <img
                             style="display: block; margin: 0 auto; width: 100%;"
-                            src="../images/create.png" alt="글 작성">
+                            src="../images/modify.png" alt="글 작성">
                     </div>
                     <div class="card-body">
                         <p class="ps-3 pe-3" style="text-align: center;">
-                            “ 글을 많이 많이 작성해요 !! ”<br />#글쓰기
+                            “ 틀리면 다시 시작하면 돼요 !! ”<br /># 수정
                         </p>
                     </div>
 
@@ -180,7 +180,7 @@
                                 <tbody>
                                     <c:choose>
                                         <c:when test="${like.rank == 1}">
-                                            <tr class="table-success">
+                                            <tr class="table-info">
                                                 <td class="text-center">🐸</td>
                                                 <td class="text-center">${like.nickname}</td>
                                                 <td class="text-center">${like.count}</td>
@@ -222,7 +222,7 @@
                                 <tbody>
                                     <c:choose>
                                         <c:when test="${pg.rank == 1}">
-                                            <tr class="table-success">
+                                            <tr class="table-info">
                                                 <td class="text-center">🐸</td>
                                                 <td class="text-center">${pg.title}</td>
                                                 <td class="text-center">${pg.good}</td>
@@ -265,7 +265,7 @@
                                 <tbody>
                                     <c:choose>
                                         <c:when test="${cu.rank == 1}">
-                                            <tr class="table-success">
+                                            <tr class="table-info">
                                                 <td class="text-center">🐸</td>
                                                 <td class="text-center">${cu.nickname}</td>
                                                 <td class="text-center">${cu.count}</td>
@@ -302,8 +302,8 @@
                     <div class="card border-light mb-3">
                         <div class="card-header">
                                     <p class="mt-3 ms-2">
-                                       🥝<span
-                                            class="text-body-secondary"> 글 작성</span>
+                                      👀<span
+                                            class="text-body-secondary"> 수정 하기</span>
                                     </p>
                         </div>
                      <c:url var="modifyPage" value="/community/modify" />

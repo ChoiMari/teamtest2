@@ -546,7 +546,7 @@
                                     style="width: 5%;">
                                 <p class="me-4 mb-0"
                                     style="color: grey; font-size: 90%; text-align: right;">수정
-                                    시간 : ${p.createdTime}</p>
+                                    시간 : ${p.modifiedTime}</p>
                             </div>
                             <div
                                 class="d-flex justify-content-between mt-3 me-3">
